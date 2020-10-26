@@ -1,4 +1,5 @@
 //! IMPORTS
+const Joi = require('joi');
 const express = require('express');
 const app = express();
 
@@ -17,7 +18,7 @@ const courses = [
 ]
 
 app.get('/', (req, res) => res.send("Hello World"))
-app.get('/api/courses', (req, res) => res.send([1, 2, 3]))
+app.get('/api/courses', (req, res) => res.send(courses))
 app.get('/api/courses/:id', (req, res) => {
         const course = courses.find(c => c.id == req.params.id)
         return (
@@ -27,6 +28,18 @@ app.get('/api/courses/:id', (req, res) => {
         )
 })
 app.post('/api/courses', (req, res) => {
+        const schema = Joi.object({
+                name: Joi.string().min(3).required()
+        })
+        // if (!req.body.name || req.body.length < 3) {
+        //         res.status(400).send('Name is required and should be 3 or more characters')
+        //         return;
+        // }
+        const result = schema.validate(req.body)
+        if (result.error) {
+                res.status(400).send(result.error.message)
+                return
+        }
         const course = {
                 id: courses.length + 1,
                 name: req.body.name
