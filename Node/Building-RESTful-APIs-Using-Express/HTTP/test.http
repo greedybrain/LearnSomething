@@ -1,7 +1,25 @@
-# GET   http://localhost:5000/api/courses/
-POST   http://localhost:5000/api/courses/
-Content-Type: application/json
+# GET   http://localhost:5000/api/courses/ 
+# POST  http://localhost:5000/api/courses/ 
+# PUT    http://localhost:5000/api/courses/1
+# Content-Type: application/json
+# {
+#         "name": "Adam"
+# }
 
-{
-        "name": "Da"
-}
+# DELETE http://localhost:5000/api/courses/1
+
+GET http://localhost:5000/api/genres/ 
+# GET http://localhost:5000/api/genres/1
+# POST http://localhost:5000/api/genres/ 
+# Content-Type: application/json
+
+# {
+#         "genre": "Mystery"
+# }
+# PUT http://localhost:5000/api/genres/2
+# Content-Type: application/json
+
+# {
+#         "genre": "Thriller"
+# }
+# DELETE http://localhost:5000/api/genres/2
