@@ -1,7 +1,6 @@
 //! IMPORTS
-const Joi = require('joi');
 //! custom 
-const log = require('../Tutorial/middleware/logger')
+const logger = require('../Tutorial/middleware/logger')
 const courses = require('../Tutorial/routes/courses');
 const home = require('../Tutorial/routes/home')
 //! packages
