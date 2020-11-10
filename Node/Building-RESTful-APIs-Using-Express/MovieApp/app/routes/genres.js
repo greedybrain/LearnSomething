@@ -5,13 +5,13 @@ const {
         createGenre, 
         updateGenre, 
         deleteGenre 
-} = require('../models/genre');
+} = require('../controllers/genresController');
 
 //! Packages
 const express = require('express');
 const genresRouter = express.Router()
 
-//! get all genres
+//! Get all genres
 genresRouter.get('/', async (req, res) => await getGenres(res))
 genresRouter.get('/:id', async (req, res) => await getGenre(req, res))
 genresRouter.post('/', async (req, res) => await createGenre(req, res))

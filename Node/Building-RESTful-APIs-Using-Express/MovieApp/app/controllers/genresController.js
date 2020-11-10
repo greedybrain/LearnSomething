@@ -1,17 +1,6 @@
-//! MODELS/CONTROLLERS/VALIDATIONS
-const mongoose = require('mongoose');
-const Joi = require('joi')
-
-const Genre = mongoose.model('Genre', new mongoose.Schema({
-        name: {
-                type: String,
-                required: true,
-                minlength: 5,
-                maxlength: 20
-        }
-}))
-
 //! Controller actions (Helper functions)
+const { Genre, validateGenre } = require('../models/genre');
+
 const getGenres = async res => {
         const genres = await Genre.find().sort('name')
 
@@ -55,14 +44,6 @@ const deleteGenre = async (req, res) => {
         if (!genre) return res.status(404).send("Genre does not exist")
 
         res.send(genre)
-}
-
-//! Validations
-const validateGenre = genre => {
-        const schema = Joi.object({
-                name: Joi.string().max(10).required()
-        })
-        return schema.validate(genre)
 }
 
 //! Exports

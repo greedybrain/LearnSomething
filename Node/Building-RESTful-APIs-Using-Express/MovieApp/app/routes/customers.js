@@ -5,13 +5,13 @@ const {
         createCustomer, 
         updateCustomer, 
         deleteCustomer 
-} = require('../models/customer');
+} = require('../controllers/customersController');
 
 //! Packages
 const express = require('express');
 const customersRouter = express.Router()
 
-//! get all genres
+//! Get all genres
 customersRouter.get('/', async (req, res) => await getCustomers(res))
 customersRouter.get('/:id', async (req, res) => await getCustomer(req, res))
 customersRouter.post('/', async (req, res) => await createCustomer(req, res))

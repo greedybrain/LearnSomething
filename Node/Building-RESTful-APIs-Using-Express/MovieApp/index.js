@@ -1,10 +1,10 @@
 //! IMPORTS
 //! Custom
-const genres = require('./routes/genres')
-const customers = require('./routes/customers')
+const genres = require('./app/routes/genres')
+const customers = require('./app/routes/customers')
+
 //! Packages
 const config = require('config');
-const dbDebugger = require('debug')('app:db');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
@@ -19,9 +19,8 @@ mongoose.connect(connectionString,
                 useNewUrlParser: true
         }
 )
-        .then(() => dbDebugger("Connected to the database..."))
-        .catch(err => dbDebugger(err))
-
+        .then(() => console.log("Connected to the database..."))
+        .catch(err => console.error(err))
 //! adding middleware
 app.use(express.json()) 
 app.use('/api/genres', genres)
