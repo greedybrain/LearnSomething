@@ -18,10 +18,10 @@ const createGenre = async (req, res) => {
         const { error } = validateGenre(req.body)
         if (error) return res.status(400).send(error.message)
 
-        const newGenre = new Genre({ name: req.body.name })
+        let newGenre = new Genre({ name: req.body.name })
         try {
-                genre = await newGenre.save()
-                res.send(genre)
+                newGenre = await newGenre.save()
+                res.send(newGenre)
         } catch (exc) {
                 for (field in exc.errors) {
                         console.error(exc.errors[field].message)

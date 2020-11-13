@@ -18,14 +18,14 @@ const createCustomer = async (req, res) => {
         const { error } = validateCustomer(req.body)
         if (error) return res.status(400).send(error.message)
 
-        const newCustomer = new Customer({
+        let newCustomer = new Customer({
                 name: req.body.name,
                 isGold: req.body.isGold,
                 phone: req.body.phone
         })
         try {
-                customer = await newCustomer.save()
-                res.send(customer)
+                newCustomer = await newCustomer.save()
+                res.send(newCustomer)
         } catch (exc) {
                 for (field in exc.errors) {
                         console.error(exc.errors[field].message)

@@ -29,6 +29,7 @@ app.use(express.json())
 app.use('/api/genres', genres)
 app.use('/api/customers', customers)
 app.use('/api/movies', movies)
+app.use('/api/users', users)
 
 //! LISTENING
 const PORT = process.env.PORT || 3000

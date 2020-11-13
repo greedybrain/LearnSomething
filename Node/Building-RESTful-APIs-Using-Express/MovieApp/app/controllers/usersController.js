@@ -1,3 +1,4 @@
+const _ = require('lodash')
 //! Controller actions (Helper functions)
 const { User, validateUser } = require('../models/user')
 
@@ -18,16 +19,13 @@ const createUser = async (req, res) => {
         const { error } = validateUser(req.body)
         if (error) return res.status(400).send(error.message)
 
-        const user = User.findOne({ email: req.body.email })
+        let user = User.findOne({ email: req.body.email })
         if(!user) return res.status(400).send("User is already registered")
 
-        const newUser = new User({
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-        })
+        user = new User(_.pick(req.body, ['name', 'email', 'password']))
         try {
-                user = await newUser.save()
+                user = await user.save()
+                user = _.pick(user, ['_id', 'name', 'email'])
                 res.send(user)
         } catch (exc) {
                 for (field in exc.errors) {
