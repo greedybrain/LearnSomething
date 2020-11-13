@@ -1,5 +1,7 @@
 //! IMPORTS
 //! Custom
+const users = require('./app/routes/users')
+const movies = require('./app/routes/movies')
 const genres = require('./app/routes/genres')
 const customers = require('./app/routes/customers')
 
@@ -16,7 +18,8 @@ mongoose.connect(connectionString,
                 useFindAndModify: true, 
                 useUnifiedTopology: true, 
                 useFindAndModify: false,
-                useNewUrlParser: true
+                useNewUrlParser: true,
+                useCreateIndex: true
         }
 )
         .then(() => console.log("Connected to the database..."))
@@ -25,6 +28,7 @@ mongoose.connect(connectionString,
 app.use(express.json()) 
 app.use('/api/genres', genres)
 app.use('/api/customers', customers)
+app.use('/api/movies', movies)
 
 //! LISTENING
 const PORT = process.env.PORT || 3000
