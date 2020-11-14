@@ -2,8 +2,6 @@
 const { User } = require('../models/user')
 
 //! Packages
-const config = require('config')
-const jwt = require('jsonwebtoken')
 const _ = require('lodash')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
@@ -25,7 +23,7 @@ const createUser = async (req, res) => {
         const isValidPassword = await bcrypt.compare(req.body.password, user.password)
         if (!isValidPassword) return res.status(400).send("Invalid email or password")
 
-        const token = jwt.sign(_.pick(user, ['name', 'email']), config.get('jwtPrivateKey'));
+        const token = user.generateAuthToken()
         res.send(token)
 }
 
