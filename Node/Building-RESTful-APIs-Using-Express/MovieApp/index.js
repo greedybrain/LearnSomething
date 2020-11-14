@@ -1,5 +1,6 @@
 //! IMPORTS
 //! Custom
+const auth = require('./app/routes/auths')
 const users = require('./app/routes/users')
 const movies = require('./app/routes/movies')
 const genres = require('./app/routes/genres')
@@ -10,6 +11,11 @@ const config = require('config');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+
+if (!config.get('jwtPrivateKey')) {
+        console.log("FATAL ERROR: jwtPrivateKey is not defined.")
+        process.exit(1)
+} 
 
 //! Connecting to database
 const connectionString = config.get('connection_string')
@@ -30,6 +36,7 @@ app.use('/api/genres', genres)
 app.use('/api/customers', customers)
 app.use('/api/movies', movies)
 app.use('/api/users', users)
+app.use('/api/auth', auth)
 
 //! LISTENING
 const PORT = process.env.PORT || 3000
