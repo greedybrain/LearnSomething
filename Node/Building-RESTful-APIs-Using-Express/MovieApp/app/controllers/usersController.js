@@ -6,15 +6,9 @@ const bcrypt = require('bcrypt')
 const { User, validateUser } = require('../models/user')
 
 //! Controller actions (Helper functions)
-const getUsers = async res => {
-        const users = await User.find().sort('name')
-
-        res.send(users)
-}
-
-const getUser = async (req, res)=> {
-        const user = await User.findById(req.params.id) 
-        if (!user) return res.status(404).send("User does not exist")
+const getCurrentUser = async (req, res)=> {
+        const user = await User.findById(req.user._id) .select('-password')
+        if (!user) return res.status(404).send("Not logged in")
 
         res.send(user)
 }
@@ -43,7 +37,6 @@ const createUser = async (req, res) => {
 
 //! Exports
 module.exports = {
-        getUser,
-        getUsers,
+        getCurrentUser,
         createUser,
 }
