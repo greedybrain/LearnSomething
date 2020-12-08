@@ -10,19 +10,24 @@ class Movies extends Component {
         state = {
                 movies: [],
                 genres: [],
+                selectedGenre: false,
                 pageSize: 4,
                 currentPage: 1,
         }
 
         componentDidMount() {
+                const genres = [{ name: "All Genres", _id: 0 }, ...getGenres()]
                 this.setState({
                         movies: getMovies(),
-                        genres: getGenres()
+                        genres
                 })
         }
         
         handleGenreSelect = genre => {
-                console.log(genre);
+                this.setState({
+                        selectedGenre: genre,
+                        currentPage: 1
+                })
         }
 
         handlePageChange = page => {
@@ -45,11 +50,14 @@ class Movies extends Component {
         }
 
         render() {
-                const { movies: allMovies, currentPage, pageSize, genres } = this.state
+                const { movies: allMovies, currentPage, pageSize, genres, selectedGenre } = this.state
                 const { length: count } = allMovies
                 if (count === 0) return <p>There are no movies in the database.</p>
 
-                const movies = paginate(allMovies, currentPage, pageSize)
+                const filtered = selectedGenre && selectedGenre._id
+                        ? allMovies.filter(m => m.genre._id === selectedGenre._id)
+                        : allMovies
+                const movies = paginate(filtered, currentPage, pageSize)
 
                 return (
                         <div className='row'>
@@ -57,12 +65,11 @@ class Movies extends Component {
                                         <ListGroup 
                                                 items={genres} 
                                                 onItemSelect={this.handleGenreSelect} 
-                                                textProperty="name"
-                                                valueProperty="_id"
+                                                selectedItem={ selectedGenre }
                                         />
                                 </div>
                                 <div className="col">
-                                        <p>Showing { count } movies in the database. </p>
+                                        <p>Showing { filtered.length } movies in the database. </p>
                                         <table className="table">
                                                 <thead>
                                                         <tr>
@@ -87,7 +94,7 @@ class Movies extends Component {
                                                 </tbody>
                                         </table>
                                         <Pagination 
-                                                itemsCount={ count } 
+                                                itemsCount={ filtered.length } 
                                                 pageSize={ pageSize } 
                                                 currentPage={currentPage}
                                                 onPageChange={this.handlePageChange}
