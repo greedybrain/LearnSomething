@@ -1,51 +1,44 @@
 import React, { Component } from 'react';
 
 class Counter extends Component {
-        state = {
-                count: 0,
-                // tags: ['tag1', 'tag2', 'tag3']
-        }
-
         formatCount = () => {
-                const { count } = this.state
-                if (count === 0) return 'Zero'
-                return count
+                const { value } = this.props.counter
+                if (value === 0) return 'Zero'
+                return value
         }
 
         getBadgeClasses = () => {
-                const { count } = this.state
+                const { value } = this.props.counter
                 let classes = "badge m-2 badge-"
-                classes += (count === 0) ? 'warning ': 'primary '
+                classes += (value === 0) ? 'warning ': 'primary '
                 return classes
         }
 
-        handleIncrementCount = () => {
-                this.setState(prevState => ({
-                        count: prevState.count + 1
-                }))
-        }
-
-        // renderTags = () => {
-        //         const { tags } = this.state
-        //         if (tags.length === 0) return <p>There are no tags!</p>
-        //         return (
-        //                 <ul>
-        //                         { tags.map((tag, index) => <li key={ index }>{ tag }</li>) }
-        //                 </ul>
-        //         )
-        // }
-
         render() {
+                const { onDelete, onIncrement, onDecrement, counter } = this.props
                 return (
-                        <div>
-                                <span className={this.getBadgeClasses()}>{ this.formatCount() }</span>
-                                <button 
-                                        onClick={this.handleIncrementCount} 
-                                        className="btn btn-secondary btn-sm"
-                                >
-                                        Increment
-                                </button>
-                                {/* { this.renderTags() } */}
+                        <div class="row">
+                                <div className="col-1">
+                                        <span className={this.getBadgeClasses()}>{ this.formatCount() }</span>
+                                </div>
+                                <div className="col">
+                                        <button 
+                                                onClick={() => onIncrement(counter)} 
+                                                className="btn btn-secondary btn-md"
+                                        >
+                                                +
+                                        </button>
+                                        <button 
+                                                onClick={() => onDecrement(counter)} 
+                                                className="btn btn-secondary btn-md m-2"
+                                                disabled={ counter.value === 0 ? true : null}
+                                        >
+                                                -
+                                        </button>
+                                        <button onClick={() => onDelete(counter.id)} className="btn btn-danger btn-sm">
+                                                X
+                                        </button>
+                                </div>
                         </div>
                 )
         }
