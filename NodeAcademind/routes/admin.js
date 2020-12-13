@@ -1,26 +1,21 @@
-//! Core
+//! Core Modules
 const path = require('path');
 
 //! Third Party Modules
 const express = require('express')
 const router = express.Router()
 
-router.get('/home', (req, res, next) => {
-        res.sendFile(path.join(__dirname, '../', 'views', 'index.html'))
-})
+const products = []
 
-router.get('/add-product', (req, res, next) => {
-        res.send(
-                `<form action="/products" method="POST">
-                        <input type="text" name="product" placeholder="Product" />
-                        <button type="submit">Add Product</button>
-                </form>`
-        )
-})
+// router.get('/add-product', (req, res) => res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html')))
+router.get('/add-product', (req, res) => res.render('add-product', { title: "Add Product" }))
 
 router.post('/products', (req, res) => {
-        console.log(req.body)
+        products.push({ title: req.body.title })
         res.redirect('/')
 })
 
-module.exports = router
+module.exports = {
+        products,
+        router
+}
