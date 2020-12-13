@@ -1,6 +1,4 @@
-//! Node Specfic 
-
-//! Third Party
+//! Third Party Modules
 const express = require('express')
 const app = express()
 
@@ -8,7 +6,7 @@ const app = express()
 require('dotenv').config()
 
 //! Middleware config
-require('./startup/config')(express, app)
+require('./startup/config')(app, express)
 
 //! Routes config
 require('./startup/routes')(app)

@@ -1,7 +1,15 @@
-const express = require('express');
+//! Core
+const path = require('path');
+
+//! Third Party Modules
+const express = require('express')
 const router = express.Router()
 
-router.get('/add-product', (req, res) => {
+router.get('/home', (req, res, next) => {
+        res.sendFile(path.join(__dirname, '../', 'views', 'index.html'))
+})
+
+router.get('/add-product', (req, res, next) => {
         res.send(
                 `<form action="/products" method="POST">
                         <input type="text" name="product" placeholder="Product" />
