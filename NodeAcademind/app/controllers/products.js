@@ -1,25 +1,19 @@
-//! Imports
-//
+//! Custom Modules 
+const { Product } = require('../models/product')
 
 //! Main Logic
-const products = []
-
-const getProducts = res => {
-        return res.render('shop', { products, title: 'Shop', path: '/shop' })
+exports.getProducts = (req, res) => {
+        Product.fetchAll((products) => {
+                return res.render('shop', { products, title: 'Shop', path: '/shop' })
+        })
 }
 
-const initNewProduct = res => {
+exports.initNewProduct = (req, res) => {
         return res.render('add-product', { title: "Add Product", path: '/admin/add-product' })
 }
 
-const createProduct = (req, res) => {
-        products.push({ title: req.body.title })
+exports.createProduct = (req, res) => {
+        const product = new Product(req.body.title)
+        product.save()
         return res.redirect('/')
-}
-
-//! Exports
-module.exports = {
-        getProducts,
-        initNewProduct,
-        createProduct
 }

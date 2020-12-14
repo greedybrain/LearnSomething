@@ -1,16 +1,13 @@
-//! Core Modules
-//
-
 //! Third Party Modules
 const express = require('express')
 const router = express.Router()
 
 //! Custom Modules
-const { initNewProduct, createProduct } = require('../controllers/products'); //! Controllers
+const productsController = require('../controllers/products'); //! Controllers
 
 //! Main Logic 
-router.get('/add-product', (req=null, res) => initNewProduct(res))
-router.post('/products', (req, res) => createProduct(req, res))
+router.get('/add-product', productsController.initNewProduct)
+router.post('/products', productsController.createProduct)
 
 //! Exports
 module.exports = router 
