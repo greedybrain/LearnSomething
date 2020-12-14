@@ -5,14 +5,10 @@
 const express = require('express');
 const router = express.Router()
 
-const adminRoutes = require('./admin')
+//! Cutsom Modules
+const { getProducts } = require('../controllers/products') //! Controllers
 
-router.get('/', (req, res, next) => {
-        const products = adminRoutes.products
-        res.render('shop', { products, title: "Shop", path: '/shop' })
+//! Main Logic
+router.get('/', (req=null, res) => getProducts(res))
 
-})
-
-module.exports = {
-        router
-}
+module.exports = router

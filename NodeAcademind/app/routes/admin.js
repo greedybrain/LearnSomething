@@ -5,17 +5,12 @@
 const express = require('express')
 const router = express.Router()
 
-const products = []
+//! Custom Modules
+const { initNewProduct, createProduct } = require('../controllers/products'); //! Controllers
 
-// router.get('/add-product', (req, res) => res.sendFile(path.join(__dirname, '../', 'views', 'add-product.html')))
-router.get('/add-product', (req, res) => res.render('add-product', { title: "Add Product", path: '/admin/add-product' }))
+//! Main Logic 
+router.get('/add-product', (req=null, res) => initNewProduct(res))
+router.post('/products', (req, res) => createProduct(req, res))
 
-router.post('/products', (req, res) => {
-        products.push({ title: req.body.title })
-        res.redirect('/')
-})
-
-module.exports = {
-        products,
-        router
-}
+//! Exports
+module.exports = router 
