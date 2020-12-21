@@ -3,11 +3,12 @@ const express = require('express')
 const router = express.Router()
 
 //! Custom Modules
-const productsController = require('../controllers/products'); //! Controllers
+const adminsController = require('../controllers/admin'); //! Controllers
 
 //! Main Logic 
-router.get('/add-product', productsController.initNewProduct)
-router.post('/products', productsController.createProduct)
+router.get('/add-product', adminsController.initNewProduct)
+router.get('/products', adminsController.getProducts)
+router.post('/products', adminsController.createProduct)
 
 //! Exports
 module.exports = router 

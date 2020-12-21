@@ -3,11 +3,15 @@ const fs = require('fs');
 const path = require('path');
 
 class Product {
-        constructor(title) {
+        constructor(title, imageUrl, description, price) {
                 this.title = title
+                this.imageUrl = imageUrl
+                this.description = description
+                this.price = price
         }
 
         save() {
+                this.id = Math.random().toString()
                 const thisPath = path.join(__dirname, '../../data/products.json')
 
                 fs.readFile(thisPath, (err, content) => {
@@ -23,7 +27,7 @@ class Product {
 
         static getProductsFromFile(cb) {
                 const thisPath = path.join(__dirname, '../../data/products.json')
-                return fs.readFile(thisPath, (err, content) => {
+                fs.readFile(thisPath, (err, content) => {
                         if (!err) return cb(JSON.parse(content))
                         return cb([])
                 })
@@ -31,6 +35,14 @@ class Product {
 
         static fetchAll(cb) {
                 this.getProductsFromFile(cb)
+        }
+
+        static findById(id, cb) {
+                this.getProductsFromFile((products) => {
+                        const product = products.find(prod => prod.id === id)
+                        console.log(product)
+                        return cb(product)
+                })
         }
 }
 

@@ -8,7 +8,7 @@ module.exports = function(app, express) {
         //! Middleware config
 
         //! Template engine setup
-        app.set('view engine', 'pug')
+        app.set('view engine', 'ejs')
         app.set('views', getPath('../app/views'))
 
         //! Enabling the parsing of POST data
