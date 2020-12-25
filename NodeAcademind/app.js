@@ -1,3 +1,6 @@
+//! Cutom Modules
+const dbConnect = require('./utils/db')
+
 //! Third Party Modules
 const express = require('express')
 const app = express()
@@ -12,5 +15,6 @@ require('./startup/config')(app, express)
 require('./startup/routes')(app)
 
 //! Listening...
+dbConnect()
 require('./startup/listener')(app)
 

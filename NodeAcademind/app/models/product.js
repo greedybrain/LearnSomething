@@ -1,5 +1,26 @@
-const Sequelize = require('sequelize')
+const mongoose = require('mongoose');
 
-const sequelize = require('../../utils/db')
+const Schema = mongoose.Schema
 
-const Product = sequelize.
+const ProductSchema = new Schema({
+        title: {
+                type: String,
+                required: true
+        },
+        price: {
+                type: Number,
+                required: true,
+        },
+        description: {
+                type: String,
+                required: true
+        },
+        imageUrl: {
+                type: String,
+                required: true
+        }
+});
+
+const Product = mongoose.model('Product', ProductSchema)
+
+module.exports = Product
