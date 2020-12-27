@@ -1,21 +1,73 @@
 //! NPM Modules
 const validator = require('validator');
 const chalk = require('chalk');
+const yargs = require('yargs')
 
-//! Custom Modules/Helper Vars
-const getNotes = require('./notes')
-//==============================
-const error = chalk.bold.red.inverse
-const success = chalk.bold.green.inverse
-const log = console.log
+//! Custom Modules
+const { getNotes, readNote, addNote, removeNote } = require('./notes');
 
-// 
-const message = getNotes()
-console.log(message)
+// add, remove, read, list
 
-// console.log(validator.isEmail('willis@gmail.com'))
-if (validator.isURL('https://google.co')) log(success("Valid url"))
-else log(error("Please check URL"))
+//! Create add command
+yargs.command({
+        command: 'add',
+        describe: 'Add a new note',
+        builder: {
+                title: {
+                        type: 'string',
+                        describe: 'Note title',
+                        demandOption: true,
+                },
+                body: {
+                        type: 'string',
+                        describe: 'Note body',
+                        demandOption: true, 
+                }
+        },      
+        handler(argv) {
+                addNote(argv.title, argv.body)
+        }
+})
 
+//! Create remove command
+yargs.command({
+        command: 'remove',
+        describe: 'Remove a note',
+        builder: {
+                title: {
+                        type: 'string',
+                        describe: 'Note title',
+                        demandOption: true,
+                },
+        },
+        handler(argv){
+                removeNote(argv.title)
+        }
+})
 
-// episode 17 heroes
+//! Create read command 
+yargs.command({
+        command: 'read',
+        describe: 'Reading a note',
+        builder: {
+                title: {
+                        type: 'string',
+                        describe: 'Note title',
+                        demandOption: true,
+                },
+        },
+        handler(argv) {
+                readNote(argv.title)
+        }
+})
+
+//! Create list command 
+yargs.command({
+        command: 'list',
+        describe: 'Listing notes',
+        handler() {
+                getNotes()
+        }
+})
+
+yargs.parse()
