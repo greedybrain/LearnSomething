@@ -29,14 +29,10 @@ const addNote = (title, body) => {
         const notes = loadNotes()
         const note = notes.find(n => n.title === title)
 
-        debugger
-
-        if (!note) {
-                notes.push({ title, body})
-                saveNotes(notes)
-                return log(success('Note successfully added'))
-        }
-        log(error('Note already exists'))
+        if (note) return log(error('Note already exists'))
+        notes.push({ title, body})
+        saveNotes(notes)
+        return log(success('Note successfully added'))
 }
 
 const removeNote = title => {
